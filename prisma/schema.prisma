@@ -8,11 +8,13 @@ datasource db {
 }
 
 /// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
-
-model User {
-  id        Int      @id @default(autoincrement())
-  name      String
-  email     String   @unique
-  isActive  Boolean  @default(true)
-  createdAt DateTime @default(now())
+model user {
+  id          Int      @id @default(autoincrement())
+  name        String
+  userName    String   @unique
+  password    String
+  isAdmin     Boolean  @default(false)
+  isRootAdmin Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
