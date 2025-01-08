@@ -22,6 +22,8 @@ export class UserService {
       throw new HttpException('User not found', HttpStatus.NOT_FOUND);
     }
     const { password, ...result } = user;
+    console.log(result);
+
     return result;
   }
 
