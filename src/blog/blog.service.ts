@@ -43,8 +43,11 @@ export class BlogService {
       },
     });
   }
-  findAll() {
-    return `This action returns all blog`;
+  async findAll() {
+    const allBlogs = await this.prisma.blog.findMany();
+    return allBlogs.map((blog) => ({
+      slug: blog.slug,
+    }));
   }
 
   findOne(id: number) {
