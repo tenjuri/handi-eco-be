@@ -3,6 +3,7 @@
   "builds": [
     {
       "src": "dist",
+      "use": "@vercel/node",
       "config": {
         "maxDuration": 30
       }
