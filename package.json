@@ -31,6 +31,7 @@
     "@nestjs/platform-express": "^10.0.0",
     "@prisma/client": "^6.1.0",
     "@types/cors": "^2.8.17",
+    "@vercel/node": "^5.0.2",
     "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
     "passport": "^0.7.0",
