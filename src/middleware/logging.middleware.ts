@@ -12,7 +12,7 @@ export class LoggingMiddleware implements NestMiddleware {
       const { statusCode, statusMessage } = res;
       const elapsed = Date.now() - start;
       this.logger.log(
-        `Error: ${statusMessage} ${method} ${originalUrl} ${statusCode} - ${elapsed}ms`,
+        `${statusMessage} ${method} ${originalUrl} ${statusCode} - ${elapsed}ms`,
       );
     });
 
