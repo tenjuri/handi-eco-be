@@ -50,15 +50,28 @@ export class BlogService {
     }));
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} blog`;
+  async findOne(id: number) {
+    return this.prisma.blog.findUnique({
+      where: {
+        id,
+      },
+    });
   }
 
-  update(id: number, updateBlogDto: UpdateBlogDto) {
-    return `This action updates a #${id} blog`;
+  async update(id: number, updateBlogDto: UpdateBlogDto) {
+    return this.prisma.blog.update({
+      where: {
+        id,
+      },
+      data: updateBlogDto,
+    });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} blog`;
+  async remove(id: number) {
+    return this.prisma.blog.delete({
+      where: {
+        id,
+      },
+    });
   }
 }
