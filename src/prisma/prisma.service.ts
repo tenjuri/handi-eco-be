@@ -18,7 +18,18 @@ export class PrismaService
   }
 
   async onModuleInit() {
-    await this.$connect();
+    let retries = 5;
+    while (retries) {
+      try {
+        await this.$connect();
+        break;
+      } catch (error) {
+        if (retries === 1) throw error;
+        retries -= 1;
+        console.log(`Retrying Prisma connection... ${retries} attempts left`);
+        await new Promise((resolve) => setTimeout(resolve, 1000)); // retry after 1 second
+      }
+    }
   }
 
   async onModuleDestroy() {
