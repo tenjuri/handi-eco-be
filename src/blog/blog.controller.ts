@@ -30,9 +30,9 @@ export class BlogController {
     return this.blogService.findBlogBySlug(slug);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateBlogDto: UpdateBlogDto) {
-    return this.blogService.update(+id, updateBlogDto);
+  @Post(':slug')
+  update(@Param('slug') slug: string, @Body() updateBlogDto: UpdateBlogDto) {
+    return this.blogService.update(slug, updateBlogDto);
   }
 
   @Delete(':id')

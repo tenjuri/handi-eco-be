@@ -58,10 +58,18 @@ export class BlogService {
     });
   }
 
-  async update(id: number, updateBlogDto: UpdateBlogDto) {
+  async update(slug: string, updateBlogDto: UpdateBlogDto) {
+    const exist = await this.prisma.blog.findFirst({
+      where: {
+        slug,
+      },
+    });
+    if (!exist) {
+      throw new HttpException('Blog not found', HttpStatus.NOT_FOUND);
+    }
     return this.prisma.blog.update({
       where: {
-        id,
+        slug,
       },
       data: updateBlogDto,
     });
