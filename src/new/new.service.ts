@@ -12,6 +12,9 @@ export class NewService {
 
   async findAllNews() {
     return await this.prisma.blog.findMany({
+      where: {
+        isPublished: true,
+      },
       orderBy: {
         createdAt: 'desc',
       },

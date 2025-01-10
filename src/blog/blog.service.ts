@@ -95,6 +95,14 @@ export class BlogService {
     });
   }
 
+  async findAllBlogs() {
+    return await this.prisma.blog.findMany({
+      orderBy: {
+        createdAt: 'desc',
+      },
+    });
+  }
+
   async remove(id: number) {
     return this.prisma.blog.delete({
       where: {
