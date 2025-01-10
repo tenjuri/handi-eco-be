@@ -19,6 +19,16 @@ export class AuthController {
     if (!user) {
       throw new UnauthorizedException('Invalid credentials');
     }
-    return this.authService.login(user);
+    const accessToken = await this.authService.login(user);
+    return {
+      ...accessToken,
+      user,
+    };
+  }
+
+  @Post('refresh')
+  async refresh(@Body() body: { refreshToken: string }) {
+    const { refreshToken } = body;
+    return this.authService.refreshToken(refreshToken);
   }
 }

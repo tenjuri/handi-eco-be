@@ -21,9 +21,50 @@ export class AuthService {
   }
 
   async login(user: any) {
-    const payload = { ...user };
     return {
-      accessToken: this.jwtService.sign(payload),
+      accessToken: await this.generateAccessToken(user),
+      refreshToken: await this.generateRefreshToken(user),
     };
+  }
+
+  async refreshToken(refreshToken: string) {
+    try {
+      // Verify the refresh token
+      const payload = await this.jwtService.verifyAsync(refreshToken, {
+        secret: process.env.JWT_SECRET, // Make sure to set this in your env
+      });
+
+      // Find the user
+      const user = await this.prisma.user.findUnique({
+        where: { id: payload.sub },
+      });
+      if (!user) {
+        throw new UnauthorizedException('User not found');
+      }
+
+      // Generate new access token
+      const accessToken = this.jwtService.sign({ ...user });
+
+      return {
+        accessToken: accessToken,
+        // Optionally generate new refresh token if you want to rotate them
+        // refresh_token: await this.generateRefreshToken(user),
+      };
+    } catch {
+      throw new UnauthorizedException('Invalid refresh token');
+    }
+  }
+
+  private async generateAccessToken(user: any) {
+    const payload = { sub: user.id, username: user.userName };
+    return this.jwtService.sign(payload);
+  }
+
+  private async generateRefreshToken(user: any) {
+    const payload = { sub: user.id };
+    return this.jwtService.sign(payload, {
+      secret: process.env.JWT_SECRET,
+      expiresIn: '2h', // Longer expiration for refresh token
+    });
   }
 }

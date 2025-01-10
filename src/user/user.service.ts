@@ -1,7 +1,6 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import * as bcrypt from 'bcrypt';
-import * as crypto from 'crypto';
 
 @Injectable()
 export class UserService {
@@ -46,7 +45,7 @@ export class UserService {
     });
   }
 
-  async update(id: number, data: { userName: string; password: string }) {
+  async updatePassword(id: number, data: { password: string }) {
     const existingUser = await this.prisma.user.findUnique({ where: { id } });
 
     if (!existingUser) {
@@ -59,6 +58,16 @@ export class UserService {
     });
   }
 
+  async updateInformation(
+    id: number,
+    data: { name: string; userName: string },
+  ) {
+    return this.prisma.user.update({
+      where: { id },
+      data: { ...data },
+    });
+  }
+
   async remove(id: number) {
     const existingUser = await this.prisma.user.findUnique({ where: { id } });
 
@@ -66,5 +75,13 @@ export class UserService {
       throw new HttpException('User not found', HttpStatus.NOT_FOUND);
     }
     return this.prisma.user.delete({ where: { id } });
+  }
+
+  async getAll() {
+    const users = await this.prisma.user.findMany();
+    return users.map((user) => {
+      const { password, ...result } = user;
+      return result;
+    });
   }
 }

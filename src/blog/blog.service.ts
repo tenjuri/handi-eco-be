@@ -75,6 +75,26 @@ export class BlogService {
     });
   }
 
+  async publish(slug: string) {
+    const exist = await this.prisma.blog.findFirst({
+      where: {
+        slug,
+      },
+    });
+    if (!exist) {
+      throw new HttpException('Blog not found', HttpStatus.NOT_FOUND);
+    }
+    const isPublished = exist.isPublished;
+    return this.prisma.blog.update({
+      where: {
+        slug,
+      },
+      data: {
+        isPublished: !isPublished,
+      },
+    });
+  }
+
   async remove(id: number) {
     return this.prisma.blog.delete({
       where: {

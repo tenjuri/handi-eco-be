@@ -9,14 +9,14 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { UserService } from './user.service';
-import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { JwtAuthGuard, RootAdminJwtAuthGuard } from '../auth/jwt-auth.guard';
 import { User } from '../auth/user.decorator';
 
 @Controller('users')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Get(':id')
+  @Get('/one/:id')
   // @UseGuards(JwtAuthGuard)
   findOne(@Param('id') id: number, @User() user: any) {
     return this.userService.findOne(Number(id));
@@ -37,9 +37,21 @@ export class UserController {
     return this.userService.create(data);
   }
 
-  @Post('update/:id')
-  @UseGuards(JwtAuthGuard)
+  @Post('/update-password/:id')
+  @UseGuards(RootAdminJwtAuthGuard)
   update(@Param('id') id: number, @Body() data: any) {
-    return this.userService.update(id, data);
+    return this.userService.updatePassword(id, data);
+  }
+
+  @Post('/update-information/:id')
+  @UseGuards(RootAdminJwtAuthGuard)
+  updateInformation(@Param('id') id: number, @Body() data: any) {
+    return this.userService.updateInformation(id, data);
+  }
+
+  @Get('/all')
+  @UseGuards(RootAdminJwtAuthGuard)
+  getAll() {
+    return this.userService.getAll();
   }
 }
