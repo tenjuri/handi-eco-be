@@ -6,10 +6,12 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { BlogService } from './blog.service';
 import { CreateBlogDto } from './dto/create-blog.dto';
 import { UpdateBlogDto } from './dto/update-blog.dto';
+import { RootAdminJwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @Controller('blogs')
 export class BlogController {
@@ -36,6 +38,7 @@ export class BlogController {
   }
 
   @Post('/publish/:slug')
+  @UseGuards(RootAdminJwtAuthGuard)
   publish(@Param('slug') slug: string) {
     return this.blogService.publish(slug);
   }

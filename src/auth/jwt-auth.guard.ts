@@ -9,7 +9,7 @@ import { AuthGuard } from '@nestjs/passport';
 export class JwtAuthGuard extends AuthGuard('jwt') {
   handleRequest(err: any, user: any, info: any, context: ExecutionContext) {
     if (err || !user) {
-      throw err || new UnauthorizedException('Invalid or missing token');
+      throw err || new UnauthorizedException('You are not logged in');
     }
     return user;
   }
@@ -18,7 +18,7 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
 export class AdminJwtAuthGuard extends AuthGuard('jwt') {
   handleRequest(err: any, user: any, info: any, context: ExecutionContext) {
     if (err || !user.isAdmin) {
-      throw err || new UnauthorizedException('Invalid or missing token');
+      throw err || new UnauthorizedException('You are not admin');
     }
     return user;
   }
@@ -27,7 +27,7 @@ export class AdminJwtAuthGuard extends AuthGuard('jwt') {
 export class RootAdminJwtAuthGuard extends AuthGuard('jwt') {
   handleRequest(err: any, user: any, info: any, context: ExecutionContext) {
     if (err || !user.isRootAdmin) {
-      throw err || new UnauthorizedException('Invalid or missing token');
+      throw err || new UnauthorizedException('You are not root admin');
     }
     return user;
   }

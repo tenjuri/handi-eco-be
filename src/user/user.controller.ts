@@ -23,7 +23,7 @@ export class UserController {
   }
 
   @Post('/create')
-  // @UseGuards(JwtAuthGuard)
+  @UseGuards(RootAdminJwtAuthGuard)
   create(
     @Body()
     data: {
