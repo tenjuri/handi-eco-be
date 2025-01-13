@@ -23,6 +23,7 @@ model blog {
   id          Int      @id @default(autoincrement())
   slug        String   @unique
   title       String
+  description String   @default("")
   banner      String
   isPublished Boolean  @default(true)
   content     Json

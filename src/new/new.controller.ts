@@ -30,6 +30,11 @@ export class NewController {
     return this.newService.findAllNews();
   }
 
+  @Get('/latest')
+  findLatestNews() {
+    return this.newService.findLatestNews();
+  }
+
   @Get(':slug')
   findOne(@Param('slug') slug: string) {
     return this.newService.findBySlug(slug);

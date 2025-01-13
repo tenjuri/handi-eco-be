@@ -27,6 +27,18 @@ export class NewService {
     });
   }
 
+  async findLatestNews() {
+    return await this.prisma.blog.findMany({
+      where: {
+        isPublished: true,
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
+      take: 9,
+    });
+  }
+
   findAll() {
     return `This action returns all new`;
   }

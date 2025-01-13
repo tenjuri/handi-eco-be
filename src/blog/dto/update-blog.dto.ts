@@ -15,4 +15,8 @@ export class UpdateBlogDto extends PartialType(CreateBlogDto) {
   @IsNotEmpty()
   @IsString()
   title: string;
+
+  @IsNotEmpty()
+  @IsString()
+  description: string;
 }
