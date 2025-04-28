@@ -18,12 +18,11 @@ export class UserController {
 
   @Get('/one/:id')
   // @UseGuards(JwtAuthGuard)
-  findOne(@Param('id') id: number, @User() user: any) {
-    return this.userService.findOne(Number(id));
+  findOne(@Param('id') id: string, @User() user: any) {
+    return this.userService.findOne(id);
   }
 
   @Post('/create')
-  @UseGuards(RootAdminJwtAuthGuard)
   create(
     @Body()
     data: {
@@ -39,13 +38,13 @@ export class UserController {
 
   @Post('/update-password/:id')
   @UseGuards(RootAdminJwtAuthGuard)
-  update(@Param('id') id: number, @Body() data: any) {
+  update(@Param('id') id: string, @Body() data: any) {
     return this.userService.updatePassword(id, data);
   }
 
   @Post('/update-information/:id')
   @UseGuards(RootAdminJwtAuthGuard)
-  updateInformation(@Param('id') id: number, @Body() data: any) {
+  updateInformation(@Param('id') id: string, @Body() data: any) {
     return this.userService.updateInformation(id, data);
   }
 

@@ -15,7 +15,7 @@ export class UserService {
     return this.prisma.user.findMany();
   }
 
-  async findOne(id: number) {
+  async findOne(id: string) {
     const user = await this.prisma.user.findUnique({ where: { id } });
     if (!user) {
       throw new HttpException('User not found', HttpStatus.NOT_FOUND);
@@ -45,7 +45,7 @@ export class UserService {
     });
   }
 
-  async updatePassword(id: number, data: { password: string }) {
+  async updatePassword(id: string, data: { password: string }) {
     const existingUser = await this.prisma.user.findUnique({ where: { id } });
 
     if (!existingUser) {
@@ -59,7 +59,7 @@ export class UserService {
   }
 
   async updateInformation(
-    id: number,
+    id: string,
     data: { name: string; userName: string },
   ) {
     return this.prisma.user.update({
@@ -68,7 +68,7 @@ export class UserService {
     });
   }
 
-  async remove(id: number) {
+  async remove(id: string) {
     const existingUser = await this.prisma.user.findUnique({ where: { id } });
 
     if (!existingUser) {

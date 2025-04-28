@@ -39,5 +39,8 @@ export default server;
 //     allowedHeaders: ['Content-Type', 'Authorization'],
 //   });
 //   await app.listen(process.env.PORT ?? 4000);
+//   console.log(
+//     `Application is running on: http://localhost:${process.env.PORT ?? 4000}`,
+//   );
 // }
 // bootstrap();

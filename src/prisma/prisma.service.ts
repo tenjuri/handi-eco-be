@@ -11,7 +11,7 @@ export class PrismaService
       log: ['error', 'warn'],
       datasources: {
         db: {
-          url: process.env.DATABASE_URL,
+          url: process.env.MONGO_URI,
         },
       },
     });

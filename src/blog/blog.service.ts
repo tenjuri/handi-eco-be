@@ -50,7 +50,7 @@ export class BlogService {
     }));
   }
 
-  async findOne(id: number) {
+  async findOne(id: string) {
     return this.prisma.blog.findUnique({
       where: {
         id,
@@ -103,7 +103,7 @@ export class BlogService {
     });
   }
 
-  async remove(id: number) {
+  async remove(id: string) {
     return this.prisma.blog.delete({
       where: {
         id,

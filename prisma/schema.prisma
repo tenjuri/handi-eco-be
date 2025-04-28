@@ -3,13 +3,12 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+  provider = "mongodb"
+  url      = env("MONGO_URI")
 }
 
-/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
 model user {
-  id          Int      @id @default(autoincrement())
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
   name        String
   userName    String   @unique
   password    String
@@ -20,7 +19,7 @@ model user {
 }
 
 model blog {
-  id          Int      @id @default(autoincrement())
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
   slug        String   @unique
   title       String
   description String   @default("")
